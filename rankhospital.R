@@ -24,11 +24,7 @@ rankhospital<-function(state, outcome, num="best") {
   View(ordered_subset_outcome)
   split_sorted<-split(ordered_subset_outcome,ordered_subset_outcome[,3])
   numChar <- as.character(num)
-  orderedIndex<-switch(numChar,
-                        'best'=1,
-                        'worst'= length(split_sorted),
-                         num
-  )
+  
  
   maxSplitSorted <- length(split_sorted)
   message(maxSplitSorted)
@@ -37,6 +33,12 @@ rankhospital<-function(state, outcome, num="best") {
   }
 
   newDF<-do.call("rbind", split_sorted)
+  orderedIndex<-switch(numChar,
+                       'best'=1,
+                       'worst'= nrow(newDF),
+                       num
+  )
+  
   if(orderedIndex>nrow(newDF)) {
     return(NA)  
   } else {
